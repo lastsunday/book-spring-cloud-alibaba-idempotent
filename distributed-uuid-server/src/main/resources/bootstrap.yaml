@@ -1,0 +1,29 @@
+server:
+  port: 7656
+spring:
+  application:
+    name: distributed-uuid-server
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: f0f2ef4d-ef19-481d-ab05-501dc330e78f
+        group: distributed-uuid-server
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: f0f2ef4d-ef19-481d-ab05-501dc330e78f
+        group: distributed-uuid-server
+        extension-configs:
+          - data-id: snowflake-config.yaml
+            group: distributed-uuid-server
+            refresh: true
+dubbo:
+  scan:
+    base-packages: com.github.lastsunday.cloud
+  registry:
+    address: nacos://127.0.0.1:8848
+  protocol:
+    name: dubbo
+    port: 26761

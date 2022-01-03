@@ -1,0 +1,45 @@
+server:
+  port 7867
+spring:
+  application:
+    name: idempotent-user-server
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: f0f2ef4d-ef19-481d-ab05-501dc330e78f
+        group: idempotent-user-server
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: f0f2ef4d-ef19-481d-ab05-501dc330e78f
+        group: idempotent-user-server
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/spring_cloud_alibaba_practice_idempotent?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password:
+    maximumPoolSize: 10
+    minimumIdle: 2
+    ideleTimeout: 600000
+    connectionTimeout: 30000
+    maxLifetime: 1800000
+dubbo:
+  scan:
+    base-packages: com.github.lastsunday.cloud
+  registry:
+    address: nacos://127.0.0.1:8848
+  protocol:
+    name: dubbo
+    port: 26756
+  cloud:
+    subscribed-services: idempotent-user-server
+mybatis-plus:
+  type-aliases-package: com.github.lastsunday.cloud.mapper
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml

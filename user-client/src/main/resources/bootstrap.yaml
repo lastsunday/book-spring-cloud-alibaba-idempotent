@@ -1,0 +1,28 @@
+server:
+  port: 7889
+spring:
+  application:
+    name: idempotent-user-client
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: f0f2ef4d-ef19-481d-ab05-501dc330e78f
+        group: idempotent-user-client
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: f0f2ef4d-ef19-481d-ab05-501dc330e78f
+        group: idempotent-user-client
+        name: idempotent-user-client.yaml
+        refresh-enabled: true
+        file-extension: yaml
+dubbo:
+  cloud:
+    subscribed-services: distributed-uuid-server,idempotent-user-server
+  protocol:
+    name: dubbo
+    port: 26734
+  registry:
+    address: nacos://127.0.0.1:8848
